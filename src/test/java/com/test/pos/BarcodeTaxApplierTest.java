@@ -9,7 +9,9 @@ public class BarcodeTaxApplierTest {
 
 	@Test
 	public void shouldNotApplyAnyTaxWhenBothFederalAndProvincialTaxRatesAreZero(){
-		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(0,0);
+		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
+				new FederalTaxRate(0),
+				new ProvincialTaxRate(0));
 		
 		int priceWithoutFederalTax = barcodeTaxApplier.apply(100);
 		
@@ -18,7 +20,9 @@ public class BarcodeTaxApplierTest {
 	
 	@Test
 	public void shouldApplyOnlyFederalTaxRateWhenProvincialTaxRateIsZero(){
-		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(5,0);
+		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
+				new FederalTaxRate(5),
+				new ProvincialTaxRate(0));
 		
 		int priceWithFederalTax = barcodeTaxApplier.apply(100);
 		
@@ -27,7 +31,9 @@ public class BarcodeTaxApplierTest {
 	
 	@Test
 	public void shouldApplyOnlyProvincialTaxRateWhenFederalTaxRateIsZero(){
-		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(0,8);
+		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
+				new FederalTaxRate(0),
+				new ProvincialTaxRate(8));
 		
 		int priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(100);
 		
@@ -36,7 +42,9 @@ public class BarcodeTaxApplierTest {
 	
 	@Test
 	public void shouldApplyBothFederalAndProvincialTaxRates(){
-		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(5,8);
+		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
+				new FederalTaxRate(5),
+				new ProvincialTaxRate(8));
 		
 		int priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(100);
 		

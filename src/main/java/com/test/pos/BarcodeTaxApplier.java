@@ -2,10 +2,10 @@ package com.test.pos;
 
 public class BarcodeTaxApplier implements TaxApplier{
 
-	private final int federalTaxRate;
-	private final int provincialTaxRate;
+	private final FederalTaxRate federalTaxRate;
+	private final ProvincialTaxRate provincialTaxRate;
 	
-	public BarcodeTaxApplier(final int federalTaxRate, final int provincialTaxRate){
+	public BarcodeTaxApplier(final FederalTaxRate federalTaxRate, final ProvincialTaxRate provincialTaxRate){
 		this.federalTaxRate = federalTaxRate;
 		this.provincialTaxRate = provincialTaxRate;
 	}
@@ -16,10 +16,10 @@ public class BarcodeTaxApplier implements TaxApplier{
 	}
 	
 	private int applyFederalTaxRate(final int price){
-		return (price * federalTaxRate / 100);
+		return federalTaxRate.simpleTaxFor(price);
 	}
 	
 	private int applyProvincialTaxRate(final int price){
-		return (price * provincialTaxRate / 100);
+		return provincialTaxRate.simpleTaxFor(price);
 	}
 }
