@@ -50,7 +50,7 @@ public class BarcodeScannerEventHandlerTest {
 	}
 	
 	@Test
-	public void displayedPriceShouldHaveTaxesAppliedApplied(){
+	public void displayedPriceShouldHaveTaxesApplied(){
 		Display display = mock(Display.class);
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
