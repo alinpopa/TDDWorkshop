@@ -17,4 +17,12 @@ public class FederalTaxRateTest {
 		assertThat(rate, is(5));
 	}
 	
+	@Test
+	public void shouldNotApplyAnyTaxForTheGivenAmountWhenPercentageIsZero(){
+		FederalTaxRate federalTaxRate = new FederalTaxRate(0);
+		
+		int rate = federalTaxRate.simpleTaxFor(100);
+		
+		assertThat(rate, is(0));
+	}
 }

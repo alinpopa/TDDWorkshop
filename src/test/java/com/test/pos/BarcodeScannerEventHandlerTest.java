@@ -2,13 +2,14 @@ package com.test.pos;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
 public class BarcodeScannerEventHandlerTest {
 	
-	private static final String VALID_BARCODE = "valid barcode";
+	private static final String PRODUCT_01 = "product01";
 	private static final String INVALID_BARCODE = "invalid barcode";
 
 	@Test
@@ -40,26 +41,39 @@ public class BarcodeScannerEventHandlerTest {
 		Display display = mock(Display.class);
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
-		stub(repository.get(VALID_BARCODE)).toReturn(100);
+		stub(repository.get(PRODUCT_01)).toReturn(100);
 		stub(taxApplier.apply(100)).toReturn(100);
 		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository, taxApplier);
 		
-		codeBarScanner.handle(new BarcodeEvent(VALID_BARCODE));
+		codeBarScanner.handle(new BarcodeEvent(PRODUCT_01));
 		
 		verify(display).print(100);
 	}
 	
 	@Test
-	public void displayedPriceShouldHaveTheFederalTaxApplied(){
+	public void displayedPriceShouldHaveTaxesAppliedApplied(){
 		Display display = mock(Display.class);
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
-		stub(repository.get(VALID_BARCODE)).toReturn(100);
+		stub(repository.get(PRODUCT_01)).toReturn(100);
 		stub(taxApplier.apply(100)).toReturn(105);
 		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
 		
-		codeBarScanner.handle(new BarcodeEvent(VALID_BARCODE));
+		codeBarScanner.handle(new BarcodeEvent(PRODUCT_01));
 		
 		verify(display).print(105);
+	}
+	
+	@Test
+	public void shouldApplyTaxesToTheGivenPrice(){
+		Display display = mock(Display.class);
+		Repository repository = mock(Repository.class);
+		TaxApplier taxApplier = mock(TaxApplier.class);
+		stub(repository.get(PRODUCT_01)).toReturn(100);
+		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
+		
+		codeBarScanner.handle(new BarcodeEvent(PRODUCT_01));
+		
+		verify(taxApplier).apply(100);
 	}
 }
