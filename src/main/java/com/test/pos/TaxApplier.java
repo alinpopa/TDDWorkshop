@@ -1,5 +1,5 @@
 package com.test.pos;
 
 public interface TaxApplier {
-	Long applyFederal(Long price);
+	int apply(int price);
 }

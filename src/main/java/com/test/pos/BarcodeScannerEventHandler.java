@@ -23,7 +23,7 @@ public class BarcodeScannerEventHandler {
 
 	private void displayBarCode(final String barCodeEventValue) {
 		try {
-			Long barCodePrice = taxApplier.applyFederal(repository.get(barCodeEventValue));
+			int barCodePrice = taxApplier.apply(repository.get(barCodeEventValue));
 			display.print(barCodePrice);
 		} catch (InvalidBarCodeEventException e) {
 			display.print(String.format(PRODUCT_NOT_FOUND_MESSAGE, barCodeEventValue));

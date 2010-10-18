@@ -40,13 +40,13 @@ public class BarcodeScannerEventHandlerTest {
 		Display display = mock(Display.class);
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
-		stub(repository.get(VALID_BARCODE)).toReturn(100L);
-		stub(taxApplier.applyFederal(100L)).toReturn(100L);
+		stub(repository.get(VALID_BARCODE)).toReturn(100);
+		stub(taxApplier.apply(100)).toReturn(100);
 		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository, taxApplier);
 		
 		codeBarScanner.handle(new BarcodeEvent(VALID_BARCODE));
 		
-		verify(display).print(100L);
+		verify(display).print(100);
 	}
 	
 	@Test
@@ -54,12 +54,12 @@ public class BarcodeScannerEventHandlerTest {
 		Display display = mock(Display.class);
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
-		stub(repository.get(VALID_BARCODE)).toReturn(100L);
-		stub(taxApplier.applyFederal(100L)).toReturn(105L);
+		stub(repository.get(VALID_BARCODE)).toReturn(100);
+		stub(taxApplier.apply(100)).toReturn(105);
 		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
 		
 		codeBarScanner.handle(new BarcodeEvent(VALID_BARCODE));
 		
-		verify(display).print(105L);
+		verify(display).print(105);
 	}
 }

@@ -2,6 +2,6 @@ package com.test.pos;
 
 public interface Repository {
 
-	Long get(String barCode);
+	int get(String barCode);
 
 }
