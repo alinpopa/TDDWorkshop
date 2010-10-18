@@ -7,11 +7,13 @@ public class BarcodeScannerEventHandler {
 	private final Display display;
 	private final Repository repository;
 	private final TaxApplier taxApplier;
+	private final Printer printer;
 	
-	public BarcodeScannerEventHandler(final Display display, final Repository repository, final TaxApplier taxApplier) {
+	public BarcodeScannerEventHandler(final Display display, final Repository repository, final TaxApplier taxApplier, final Printer printer) {
 		this.display = display;
 		this.repository = repository;
 		this.taxApplier = taxApplier;
+		this.printer = printer;
 	}
 
 	public void handle(BarcodeEvent barcodeEvent) {
@@ -31,6 +33,6 @@ public class BarcodeScannerEventHandler {
 	}
 
 	public void pay() {
-		throw new UnsupportedOperationException();
+		printer.printCashReport();
 	}
 }

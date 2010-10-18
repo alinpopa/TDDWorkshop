@@ -1,6 +1,6 @@
 package com.test.pos;
 
-public interface Reporter {
+public interface Printer {
 
 	void printCashReport();
 
