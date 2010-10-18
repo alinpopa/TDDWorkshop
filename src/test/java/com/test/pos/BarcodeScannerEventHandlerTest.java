@@ -2,7 +2,6 @@ package com.test.pos;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
@@ -18,9 +17,9 @@ public class BarcodeScannerEventHandlerTest {
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
 		stub(repository.get(INVALID_BARCODE)).toThrow(new InvalidBarCodeEventException());
-		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display, repository, taxApplier);
+		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display, repository, taxApplier);
 		
-		codeBarScanner.handle(new BarcodeEvent(INVALID_BARCODE));
+		barcodeScanner.handle(new BarcodeEvent(INVALID_BARCODE));
 		
 		verify(display).print("No product found with barcode ["+INVALID_BARCODE+"]");
 	}
@@ -31,9 +30,9 @@ public class BarcodeScannerEventHandlerTest {
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
 		stub(repository.get(null)).toThrow(new InvalidBarCodeEventException());
-		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display, repository, taxApplier);
+		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display, repository, taxApplier);
 		
-		codeBarScanner.handle(null);
+		barcodeScanner.handle(null);
 	}
 	
 	@Test
@@ -43,9 +42,9 @@ public class BarcodeScannerEventHandlerTest {
 		TaxApplier taxApplier = mock(TaxApplier.class);
 		stub(repository.get(PRODUCT_01)).toReturn(100);
 		stub(taxApplier.apply(100)).toReturn(100);
-		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository, taxApplier);
+		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display,repository, taxApplier);
 		
-		codeBarScanner.handle(new BarcodeEvent(PRODUCT_01));
+		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
 		
 		verify(display).print(100);
 	}
@@ -57,9 +56,9 @@ public class BarcodeScannerEventHandlerTest {
 		TaxApplier taxApplier = mock(TaxApplier.class);
 		stub(repository.get(PRODUCT_01)).toReturn(100);
 		stub(taxApplier.apply(100)).toReturn(105);
-		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
+		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
 		
-		codeBarScanner.handle(new BarcodeEvent(PRODUCT_01));
+		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
 		
 		verify(display).print(105);
 	}
@@ -70,9 +69,9 @@ public class BarcodeScannerEventHandlerTest {
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
 		stub(repository.get(PRODUCT_01)).toReturn(100);
-		BarcodeScannerEventHandler codeBarScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
+		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
 		
-		codeBarScanner.handle(new BarcodeEvent(PRODUCT_01));
+		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
 		
 		verify(taxApplier).apply(100);
 	}
