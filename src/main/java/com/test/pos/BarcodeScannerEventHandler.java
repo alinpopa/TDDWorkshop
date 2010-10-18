@@ -29,4 +29,8 @@ public class BarcodeScannerEventHandler {
 			display.print(String.format(PRODUCT_NOT_FOUND_MESSAGE, barCodeEventValue));
 		}
 	}
+
+	public void pay() {
+		throw new UnsupportedOperationException();
+	}
 }

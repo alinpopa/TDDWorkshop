@@ -75,4 +75,20 @@ public class BarcodeScannerEventHandlerTest {
 		
 		verify(taxApplier).apply(100);
 	}
+	
+	@Test
+	public void shouldGenerateCashReportForScannedProducts(){
+		Display display = mock(Display.class);
+		Repository repository = mock(Repository.class);
+		TaxApplier taxApplier = mock(TaxApplier.class);
+		Reporter reporter = mock(Reporter.class);
+		stub(repository.get(PRODUCT_01)).toReturn(100);
+		stub(taxApplier.apply(100)).toReturn(105);
+		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display,repository,taxApplier);
+		
+		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
+		barcodeScanner.pay();
+		
+		verify(reporter).printCashReport();
+	}
 }
