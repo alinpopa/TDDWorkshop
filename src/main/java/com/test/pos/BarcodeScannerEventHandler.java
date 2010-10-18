@@ -20,7 +20,7 @@ public class BarcodeScannerEventHandler {
 		if (barcodeEvent == null) {
 			throw new InvalidBarCodeEventException();
 		}
-		displayBarCode(barcodeEvent.asString());
+		displayBarCode(barcodeEvent.barcode());
 	}
 
 	private void displayBarCode(final String barCodeEventValue) {

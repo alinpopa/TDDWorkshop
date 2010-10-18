@@ -8,11 +8,11 @@ import org.junit.Test;
 public class BarcodeEventTest {
 	
 	@Test
-	public void asStringShouldReturnTheContentValueOfTheEvent(){
+	public void passedInBarcodeShouldBeReturnedAsIsFromEvent(){
 		BarcodeEvent barCodeEvent = new BarcodeEvent("test-barcode");
 		
-		String barcodeValue = barCodeEvent.asString();
+		String barcode = barCodeEvent.barcode();
 		
-		assertThat(barcodeValue,is("test-barcode"));
+		assertThat(barcode,is("test-barcode"));
 	}
 }

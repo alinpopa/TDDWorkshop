@@ -2,14 +2,14 @@ package com.test.pos;
 
 public class BarcodeEvent {
 
-	private final String barcodeValue;
+	private final String barcode;
 	
-	public BarcodeEvent(String barcodeValue) {
-		this.barcodeValue = barcodeValue;
+	public BarcodeEvent(String barcode) {
+		this.barcode = barcode;
 	}
 
-	public String asString() {
-		return barcodeValue;
+	public String barcode() {
+		return barcode;
 	}
 
 }
