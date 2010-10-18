@@ -33,6 +33,7 @@ public class BarcodeScannerEventHandler {
 	}
 
 	public void pay() {
-		printer.printCashReport();
+		printer.printCashReport(new Report() {
+		});
 	}
 }

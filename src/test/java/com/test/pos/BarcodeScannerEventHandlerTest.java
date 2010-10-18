@@ -2,6 +2,7 @@ package com.test.pos;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
@@ -82,7 +83,7 @@ public class BarcodeScannerEventHandlerTest {
 	}
 	
 	@Test
-	public void shouldGenerateCashReportForScannedProducts(){
+	public void shouldGenerateCashReportForScannedProductsWhenPaymentIsMade(){
 		Display display = mock(Display.class);
 		Repository repository = mock(Repository.class);
 		TaxApplier taxApplier = mock(TaxApplier.class);
@@ -94,6 +95,6 @@ public class BarcodeScannerEventHandlerTest {
 		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
 		barcodeScanner.pay();
 		
-		verify(printer).printCashReport();
+		verify(printer).printCashReport(any(Report.class));
 	}
 }

@@ -2,6 +2,6 @@ package com.test.pos;
 
 public interface Printer {
 
-	void printCashReport();
+	void printCashReport(Report report);
 
 }
