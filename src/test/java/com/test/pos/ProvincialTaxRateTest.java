@@ -11,9 +11,17 @@ public class ProvincialTaxRateTest {
 	public void shouldCalculateTaxForTheGivenAmount(){
 		ProvincialTaxRate princialTaxRate = new ProvincialTaxRate(8);
 		
-		int rate = princialTaxRate.simpleTaxFor(100);
+		int priceWithTax = princialTaxRate.taxFor(100);
 		
-		assertThat(rate, is(8));
+		assertThat(priceWithTax, is(8));
 	} 
 	
+	@Test
+	public void shouldNotApplyAnyTaxForTheGivenAmountWhenPercentageIsZero(){
+		ProvincialTaxRate princialTaxRate = new ProvincialTaxRate(0);
+		
+		int priceWithTax = princialTaxRate.taxFor(100);
+		
+		assertThat(priceWithTax, is(0));
+	}
 }

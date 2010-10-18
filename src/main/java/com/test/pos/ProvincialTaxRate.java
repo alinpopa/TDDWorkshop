@@ -7,7 +7,7 @@ public class ProvincialTaxRate {
 		this.rate = rateAsPercentage / 100.0;
 	}
 
-	public int simpleTaxFor(int amount) {
+	public int taxFor(int amount) {
 		return (int)(rate * amount);
 	}
 }

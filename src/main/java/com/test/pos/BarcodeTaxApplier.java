@@ -16,10 +16,10 @@ public class BarcodeTaxApplier implements TaxApplier{
 	}
 	
 	private int applyFederalTaxRate(final int price){
-		return federalTaxRate.simpleTaxFor(price);
+		return federalTaxRate.taxFor(price);
 	}
 	
 	private int applyProvincialTaxRate(final int price){
-		return provincialTaxRate.simpleTaxFor(price);
+		return provincialTaxRate.taxFor(price);
 	}
 }

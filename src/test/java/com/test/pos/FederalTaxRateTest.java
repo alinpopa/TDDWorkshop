@@ -12,17 +12,17 @@ public class FederalTaxRateTest {
 	public void shouldCalculateTaxForTheGivenAmount(){
 		FederalTaxRate federalTaxRate = new FederalTaxRate(5);
 		
-		int rate = federalTaxRate.simpleTaxFor(100);
+		int priceWithTax = federalTaxRate.taxFor(100);
 		
-		assertThat(rate, is(5));
+		assertThat(priceWithTax, is(5));
 	}
 	
 	@Test
 	public void shouldNotApplyAnyTaxForTheGivenAmountWhenPercentageIsZero(){
 		FederalTaxRate federalTaxRate = new FederalTaxRate(0);
 		
-		int rate = federalTaxRate.simpleTaxFor(100);
+		int priceWithTax = federalTaxRate.taxFor(100);
 		
-		assertThat(rate, is(0));
+		assertThat(priceWithTax, is(0));
 	}
 }
