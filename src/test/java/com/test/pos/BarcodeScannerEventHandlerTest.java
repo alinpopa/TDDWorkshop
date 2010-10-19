@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.any;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class BarcodeScannerEventHandlerTest {
@@ -14,12 +15,22 @@ public class BarcodeScannerEventHandlerTest {
 	private static final String PRODUCT_02 = "product02";
 	private static final String INVALID_BARCODE = "invalid barcode";
 
+	private Display display;
+	private Repository repository;
+	private TaxApplier taxApplier;
+	private Printer printer;
+	
+	@Before
+	public void setUp(){
+		display = mock(Display.class);
+		repository = mock(Repository.class);
+		taxApplier = mock(TaxApplier.class);
+		printer = mock(Printer.class);
+	}
+	
+	
 	@Test
 	public void shouldDisplayErrorOnDisplayWhenWrongBarCodeIsPassedIn(){
-		Display display = mock(Display.class);
-		Repository repository = mock(Repository.class);
-		TaxApplier taxApplier = mock(TaxApplier.class);
-		Printer printer = mock(Printer.class);
 		stub(repository.get(INVALID_BARCODE)).toThrow(new InvalidBarCodeEventException());
 		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display, repository, taxApplier, printer);
 		
@@ -30,10 +41,6 @@ public class BarcodeScannerEventHandlerTest {
 	
 	@Test(expected = InvalidBarCodeEventException.class)
 	public void shouldNotHandleNullBarCodeEvents(){
-		Display display = mock(Display.class);
-		Repository repository = mock(Repository.class);
-		TaxApplier taxApplier = mock(TaxApplier.class);
-		Printer printer = mock(Printer.class);
 		stub(repository.get(null)).toThrow(new InvalidBarCodeEventException());
 		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display, repository, taxApplier, printer);
 		
@@ -42,10 +49,6 @@ public class BarcodeScannerEventHandlerTest {
 	
 	@Test
 	public void shouldDisplayPriceForTheGivenBarCode(){
-		Display display = mock(Display.class);
-		Repository repository = mock(Repository.class);
-		TaxApplier taxApplier = mock(TaxApplier.class);
-		Printer printer = mock(Printer.class);
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(100);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
@@ -59,10 +62,6 @@ public class BarcodeScannerEventHandlerTest {
 	
 	@Test
 	public void displayedPriceShouldNotHaveTaxesApplied(){
-		Display display = mock(Display.class);
-		Repository repository = mock(Repository.class);
-		TaxApplier taxApplier = mock(TaxApplier.class);
-		Printer printer = mock(Printer.class);
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(100);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
@@ -76,10 +75,6 @@ public class BarcodeScannerEventHandlerTest {
 	
 	@Test
 	public void shouldApplyTaxesToTheGivenPrice(){
-		Display display = mock(Display.class);
-		Repository repository = mock(Repository.class);
-		TaxApplier taxApplier = mock(TaxApplier.class);
-		Printer printer = mock(Printer.class);
 		Amount price = new Amount(100);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
 		BarcodeScannerEventHandler barcodeScanner = new BarcodeScannerEventHandler(display, repository, taxApplier, printer);
@@ -91,10 +86,6 @@ public class BarcodeScannerEventHandlerTest {
 	
 	@Test
 	public void shouldGenerateCashReportForScannedProductsWhenPaymentIsMade(){
-		Display display = mock(Display.class);
-		Repository repository = mock(Repository.class);
-		TaxApplier taxApplier = mock(TaxApplier.class);
-		Printer printer = mock(Printer.class);
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(105);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
@@ -109,10 +100,6 @@ public class BarcodeScannerEventHandlerTest {
 	
 	@Test
 	public void printerShouldHaveReportEntriesAddedWhenPaymentIsMade(){
-		Display display = mock(Display.class);
-		Repository repository = mock(Repository.class);
-		TaxApplier taxApplier = mock(TaxApplier.class);
-		Printer printer = mock(Printer.class);
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(105);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
