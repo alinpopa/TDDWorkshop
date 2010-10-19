@@ -2,10 +2,7 @@ package com.test.pos;
 
 public interface Display {
 
-	void print(Amount price);
-
-	void print(String string);
+	void printPrice(Amount price);
 	
-	String message();
-	
+	void printPriceNotFoundMessage(String message);	
 }

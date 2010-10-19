@@ -1,27 +1,29 @@
 package com.test.pos;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
 public class PosDisplayTest {
-		
+	
 	@Test
-	public void errorMessageSentToTheDisplayShouldBeSet(){
-		PosDisplay posDisplay = new PosDisplay();
+	public void priceShouldBeSentToTheConfiguredDevice(){
+		Device device = mock(Device.class);
+		PosDisplay posDisplay = new PosDisplay(device);
 		
-		posDisplay.print("Error message");
+		posDisplay.printPrice(new Amount(100));
 		
-		assertThat(posDisplay.message(), is("Error message"));
+		verify(device).write("100");
 	}
 	
 	@Test
-	public void priceSentToTheDisplayShouldBeSet(){
-		PosDisplay posDisplay = new PosDisplay();
+	public void errorMessageShouldBeSentToTheConfiguredDevice(){
+		Device device = mock(Device.class);
+		PosDisplay posDisplay = new PosDisplay(device);
 		
-		posDisplay.print(new Amount(100));
+		posDisplay.printPriceNotFoundMessage("Invalid product barcode [xyz]");
 		
-		assertThat(posDisplay.message(), is(""+100));
+		verify(device).write("Invalid product barcode [xyz]");
 	}
 }

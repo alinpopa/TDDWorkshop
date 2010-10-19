@@ -2,25 +2,19 @@ package com.test.pos;
 
 public class PosDisplay implements Display {
 
-	private String message;
+	private final Device device;
 	
-	@Override
-	public void print(Amount price) {
-		setToPhysicalDisplay(price.toString());
+	public PosDisplay(final Device device) {
+		this.device = device;
 	}
 
 	@Override
-	public void print(String message) {
-		setToPhysicalDisplay(message);
+	public void printPrice(Amount price) {
+		device.write(price.toString());
 	}
 
 	@Override
-	public String message() {
-		return message;
+	public void printPriceNotFoundMessage(String message) {
+		device.write(message);
 	}
-
-	private void setToPhysicalDisplay(final String message){
-		this.message = message;
-	}
-	
 }

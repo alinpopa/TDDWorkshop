@@ -27,10 +27,10 @@ public class BarcodeScannerEventHandler {
 		try {
 			Amount simplePrice = repository.get(barCodeEventValue);
 			Amount barCodeTaxesPrice = taxApplier.apply(simplePrice);
-			display.print(simplePrice);
+			display.printPrice(simplePrice);
 			addReportEntry(barCodeEventValue, simplePrice, barCodeTaxesPrice);
 		} catch (InvalidBarCodeEventException e) {
-			display.print(String.format(PRODUCT_NOT_FOUND_MESSAGE, barCodeEventValue));
+			display.printPriceNotFoundMessage(String.format(PRODUCT_NOT_FOUND_MESSAGE, barCodeEventValue));
 		}
 	}
 
