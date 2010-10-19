@@ -13,15 +13,15 @@ public class PosDisplayTest {
 		
 		posDisplay.print("Error message");
 		
-		assertThat(posDisplay.getErrorMessage(), is("Error message"));
+		assertThat(posDisplay.message(), is("Error message"));
 	}
 	
 	@Test
 	public void priceSentToTheDisplayShouldBeSet(){
 		PosDisplay posDisplay = new PosDisplay();
 		
-		posDisplay.print(100);
+		posDisplay.print(new Amount(100));
 		
-		assertThat(posDisplay.getErrorMessage(), is(""+100));
+		assertThat(posDisplay.message(), is(""+100));
 	}
 }

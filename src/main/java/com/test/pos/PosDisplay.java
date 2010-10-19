@@ -5,8 +5,8 @@ public class PosDisplay implements Display {
 	private String message;
 	
 	@Override
-	public void print(int price) {
-		setToPhysicalDisplay(price+"");
+	public void print(Amount price) {
+		setToPhysicalDisplay(price.toString());
 	}
 
 	@Override
@@ -14,7 +14,8 @@ public class PosDisplay implements Display {
 		setToPhysicalDisplay(message);
 	}
 
-	public String getErrorMessage() {
+	@Override
+	public String message() {
 		return message;
 	}
 

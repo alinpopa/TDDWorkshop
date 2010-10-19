@@ -2,8 +2,10 @@ package com.test.pos;
 
 public interface Display {
 
-	void print(int price);
+	void print(Amount price);
 
 	void print(String string);
+	
+	String message();
 	
 }

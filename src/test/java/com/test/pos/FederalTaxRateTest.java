@@ -11,18 +11,22 @@ public class FederalTaxRateTest {
 	@Test
 	public void shouldCalculateTaxForTheGivenAmount(){
 		FederalTaxRate federalTaxRate = new FederalTaxRate(5);
+		Amount price = new Amount(100);
+		Amount priceWithTax = new Amount(5);
 		
-		int priceWithTax = federalTaxRate.taxFor(100);
+		Amount priceTax = federalTaxRate.taxFor(price);
 		
-		assertThat(priceWithTax, is(5));
+		assertThat(priceWithTax, is(priceTax));
 	}
 	
 	@Test
 	public void shouldNotApplyAnyTaxForTheGivenAmountWhenPercentageIsZero(){
 		FederalTaxRate federalTaxRate = new FederalTaxRate(0);
+		Amount price = new Amount(100);
+		Amount priceWithTax = new Amount(0);
 		
-		int priceWithTax = federalTaxRate.taxFor(100);
+		Amount priceTax = federalTaxRate.taxFor(price);
 		
-		assertThat(priceWithTax, is(0));
+		assertThat(priceWithTax, is(priceTax));
 	}
 }

@@ -25,15 +25,20 @@ public class BarcodeScannerEventHandler {
 
 	private void displayBarCode(final String barCodeEventValue) {
 		try {
-			int barCodePrice = taxApplier.apply(repository.get(barCodeEventValue));
-			display.print(barCodePrice);
+			Amount simplePrice = repository.get(barCodeEventValue);
+			Amount barCodeTaxesPrice = taxApplier.apply(simplePrice);
+			display.print(simplePrice);
+			addReportEntry(barCodeEventValue, simplePrice, barCodeTaxesPrice);
 		} catch (InvalidBarCodeEventException e) {
 			display.print(String.format(PRODUCT_NOT_FOUND_MESSAGE, barCodeEventValue));
 		}
 	}
 
 	public void pay() {
-		printer.printCashReport(new Report() {
-		});
+		printer.printCashReport();
+	}
+	
+	private void addReportEntry(final String barcode, final Amount price, final Amount priceWithTax){
+		printer.addEntry(new ReportEntry(barcode, price, priceWithTax));
 	}
 }

@@ -12,10 +12,11 @@ public class BarcodeTaxApplierTest {
 		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
 				new FederalTaxRate(0),
 				new ProvincialTaxRate(0));
+		Amount price = new Amount(100);
 		
-		int priceWithoutFederalTax = barcodeTaxApplier.apply(100);
+		Amount priceWithoutFederalTax = barcodeTaxApplier.apply(price);
 		
-		assertThat(priceWithoutFederalTax, is(100));
+		assertThat(priceWithoutFederalTax, is(price));
 	}
 	
 	@Test
@@ -23,10 +24,12 @@ public class BarcodeTaxApplierTest {
 		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
 				new FederalTaxRate(5),
 				new ProvincialTaxRate(0));
+		Amount price = new Amount(100);
+		Amount priceWithTax = new Amount(105);
 		
-		int priceWithFederalTax = barcodeTaxApplier.apply(100);
+		Amount priceWithFederalTax = barcodeTaxApplier.apply(price);
 		
-		assertThat(priceWithFederalTax, is(105));
+		assertThat(priceWithFederalTax, is(priceWithTax));
 	}
 	
 	@Test
@@ -34,10 +37,12 @@ public class BarcodeTaxApplierTest {
 		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
 				new FederalTaxRate(0),
 				new ProvincialTaxRate(8));
+		Amount price = new Amount(100);
+		Amount priceWithTax = new Amount(108);
 		
-		int priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(100);
+		Amount priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(price);
 		
-		assertThat(priceWithoutProvincialTaxRateApplied, is(108));
+		assertThat(priceWithoutProvincialTaxRateApplied, is(priceWithTax));
 	}
 	
 	@Test
@@ -45,9 +50,11 @@ public class BarcodeTaxApplierTest {
 		BarcodeTaxApplier barcodeTaxApplier = new BarcodeTaxApplier(
 				new FederalTaxRate(5),
 				new ProvincialTaxRate(8));
+		Amount price = new Amount(100);
+		Amount priceWithTax = new Amount(113);
 		
-		int priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(100);
+		Amount priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(price);
 		
-		assertThat(priceWithoutProvincialTaxRateApplied, is(113));
+		assertThat(priceWithoutProvincialTaxRateApplied, is(priceWithTax));
 	}
 }
