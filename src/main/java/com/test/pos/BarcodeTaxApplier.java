@@ -12,7 +12,9 @@ public class BarcodeTaxApplier implements TaxApplier{
 	
 	@Override
 	public Amount apply(Amount price) {
-		return price.plus(applyFederalTaxRate(price)).plus(applyProvincialTaxRate(price));
+		Amount priceWithFederalTaxRate = applyFederalTaxRate(price);
+		Amount priceWithProvincialTaxRate = applyProvincialTaxRate(price);
+		return price.plus(priceWithFederalTaxRate).plus(priceWithProvincialTaxRate);
 	}
 	
 	private Amount applyFederalTaxRate(final Amount price){
