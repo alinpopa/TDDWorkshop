@@ -10,10 +10,11 @@ public class AmountTest {
 	@Test
 	public void shouldBeAbleToAddTwoPrices(){
 		Amount price = new Amount(100);
+		Amount addedPrice = new Amount(300);
 		
 		Amount newPrice = price.plus(new Amount(200));
 		
-		assertThat(newPrice, is(newPrice));
+		assertThat(newPrice, is(addedPrice));
 	}
 	
 	@Test
