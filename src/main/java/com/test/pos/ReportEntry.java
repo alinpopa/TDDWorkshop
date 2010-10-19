@@ -22,4 +22,10 @@ public class ReportEntry {
 	public Amount priceWithTax() {
 		return priceWithTax;
 	}
+
+	@Override
+	public String toString() {
+		return "ReportEntry [barcode=" + barcode + ", price=" + price
+				+ ", priceWithTax=" + priceWithTax + "]";
+	}
 }

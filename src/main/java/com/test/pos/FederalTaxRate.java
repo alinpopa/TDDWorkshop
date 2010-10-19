@@ -9,8 +9,7 @@ public class FederalTaxRate {
 	}
 
 	public Amount taxFor(Amount amount) {
-		int priceWithTaxValue = (int)(rate * amount.value());
-		return new Amount(priceWithTaxValue);
+		int taxValue = (int)(rate * amount.value());
+		return new Amount(taxValue);
 	}
-
 }

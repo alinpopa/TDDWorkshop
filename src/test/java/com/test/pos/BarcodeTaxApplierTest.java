@@ -14,7 +14,7 @@ public class BarcodeTaxApplierTest {
 				new ProvincialTaxRate(0));
 		Amount price = new Amount(100);
 		
-		Amount priceWithoutFederalTax = barcodeTaxApplier.apply(price);
+		Amount priceWithoutFederalTax = barcodeTaxApplier.calculateFor(new PstFreeProduct("barcode1", price, ""));
 		
 		assertThat(priceWithoutFederalTax, is(price));
 	}
@@ -27,7 +27,7 @@ public class BarcodeTaxApplierTest {
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(105);
 		
-		Amount priceWithFederalTax = barcodeTaxApplier.apply(price);
+		Amount priceWithFederalTax = barcodeTaxApplier.calculateFor(new PstFreeProduct("barcode1", price, ""));
 		
 		assertThat(priceWithFederalTax, is(priceWithTax));
 	}
@@ -40,7 +40,7 @@ public class BarcodeTaxApplierTest {
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(108);
 		
-		Amount priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(price);
+		Amount priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.calculateFor(new PstProduct("barcode1", price, ""));
 		
 		assertThat(priceWithoutProvincialTaxRateApplied, is(priceWithTax));
 	}
@@ -53,7 +53,7 @@ public class BarcodeTaxApplierTest {
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(113);
 		
-		Amount priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.apply(price);
+		Amount priceWithoutProvincialTaxRateApplied = barcodeTaxApplier.calculateFor(new PstProduct("barcode1", price, ""));
 		
 		assertThat(priceWithoutProvincialTaxRateApplied, is(priceWithTax));
 	}

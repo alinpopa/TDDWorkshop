@@ -1,5 +1,7 @@
 package com.test.pos;
 
 public interface TaxApplier {
-	Amount apply(Amount price);
+	Amount calculateFor(PstFreeProduct product);
+	
+	Amount calculateFor(PstProduct product);
 }

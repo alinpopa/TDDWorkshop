@@ -1,6 +1,6 @@
 package com.test.pos;
 
-public class BarcodeTaxApplier implements TaxApplier{
+public class BarcodeTaxApplier implements TaxApplier {
 
 	private final FederalTaxRate federalTaxRate;
 	private final ProvincialTaxRate provincialTaxRate;
@@ -11,17 +11,23 @@ public class BarcodeTaxApplier implements TaxApplier{
 	}
 	
 	@Override
-	public Amount apply(Amount price) {
-		Amount priceWithFederalTaxRate = applyFederalTaxRate(price);
-		Amount priceWithProvincialTaxRate = applyProvincialTaxRate(price);
-		return price.plus(priceWithFederalTaxRate).plus(priceWithProvincialTaxRate);
+	public Amount calculateFor(final PstFreeProduct product){
+		Amount federalTaxRate = applyFederalTaxRate(product);
+		return product.netPrice().plus(federalTaxRate);
+	} 
+	
+	@Override
+	public Amount calculateFor(final PstProduct product){
+		Amount federalTaxRate = applyFederalTaxRate(product);
+		Amount provincialTaxRate = applyProvincialTaxRate(product);
+		return product.netPrice().plus(federalTaxRate).plus(provincialTaxRate);
 	}
 	
-	private Amount applyFederalTaxRate(final Amount price){
-		return federalTaxRate.taxFor(price);
+	private Amount applyFederalTaxRate(final Product product){
+		return federalTaxRate.taxFor(product.netPrice());
 	}
 	
-	private Amount applyProvincialTaxRate(final Amount price){
-		return provincialTaxRate.taxFor(price);
+	private Amount applyProvincialTaxRate(final Product product){
+		return provincialTaxRate.taxFor(product.netPrice());
 	}
 }
