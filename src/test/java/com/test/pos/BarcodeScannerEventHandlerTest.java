@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BarcodeScannerEventHandlerTest {
-	
+
 	private static final String PRODUCT_01 = "product01";
 	private static final String PRODUCT_02 = "product02";
 	private static final String INVALID_BARCODE = "invalid barcode";
@@ -19,101 +19,100 @@ public class BarcodeScannerEventHandlerTest {
 	private Repository repository;
 	private TaxApplier taxApplier;
 	private Printer printer;
-	
+	private BarcodeScannerEventHandler barcodeScannerEventHandler;
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		display = mock(Display.class);
 		repository = mock(Repository.class);
 		taxApplier = mock(TaxApplier.class);
 		printer = mock(Printer.class);
-	}
-	
-	@Test
-	public void shouldDisplayErrorOnDisplayWhenWrongBarCodeIsPassedIn(){
-		stub(repository.get(INVALID_BARCODE)).toThrow(new InvalidBarCodeEventException());
-		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
 		
-		barcodeScanner.handle(new BarcodeEvent(INVALID_BARCODE));
-		
-		verify(display).printPriceNotFoundMessage("No product found with barcode ["+INVALID_BARCODE+"]");
+		barcodeScannerEventHandler = new BarcodeScannerEventHandler(repository, taxApplier, display,
+				printer);
 	}
 
+	@Test
+	public void shouldDisplayErrorOnDisplayWhenWrongBarCodeIsPassedIn() {
+		stub(repository.get(INVALID_BARCODE)).toThrow(
+				new InvalidBarCodeEventException());
+		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
+
+		barcodeScanner.handle(new BarcodeEvent(INVALID_BARCODE));
+
+		verify(display).printPriceNotFoundMessage(
+				"No product found with barcode [" + INVALID_BARCODE + "]");
+	}
 
 	@Test(expected = InvalidBarCodeEventException.class)
-	public void shouldNotHandleNullBarCodeEvents(){
+	public void shouldNotHandleNullBarCodeEvents() {
 		stub(repository.get(null)).toThrow(new InvalidBarCodeEventException());
-		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
-		
-		barcodeScanner.handle(null);
+		barcodeScannerEventHandler.handle(null);
 	}
-	
+
 	@Test
-	public void shouldDisplayPriceForTheGivenBarCode(){
+	public void shouldDisplayPriceForTheGivenBarCode() {
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(100);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
 		stub(taxApplier.apply(price)).toReturn(priceWithTax);
-		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
 		
-		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
-		
+		barcodeScannerEventHandler.handle(new BarcodeEvent(PRODUCT_01));
+
 		verify(display).printPrice(price);
 	}
-	
+
 	@Test
-	public void displayedPriceShouldNotHaveTaxesApplied(){
+	public void displayedPriceShouldNotHaveTaxesApplied() {
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(100);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
 		stub(taxApplier.apply(price)).toReturn(priceWithTax);
-		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
-		
-		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
-		
+
+		barcodeScannerEventHandler.handle(new BarcodeEvent(PRODUCT_01));
+
 		verify(display).printPrice(priceWithTax);
 	}
-	
+
 	@Test
-	public void shouldApplyTaxesToTheGivenPrice(){
+	public void shouldApplyTaxesToTheGivenPrice() {
 		Amount price = new Amount(100);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
-		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
-		
-		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
-		
+
+		barcodeScannerEventHandler.handle(new BarcodeEvent(PRODUCT_01));
+
 		verify(taxApplier).apply(price);
 	}
-	
+
 	@Test
-	public void shouldGenerateCashReportForScannedProductsWhenPaymentIsMade(){
+	public void shouldGenerateCashReportForScannedProductsWhenPaymentIsMade() {
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(105);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
 		stub(taxApplier.apply(price)).toReturn(priceWithTax);
-		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
-		
-		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
-		barcodeScanner.pay();
-		
+
+		barcodeScannerEventHandler.handle(new BarcodeEvent(PRODUCT_01));
+		barcodeScannerEventHandler.pay();
+
 		verify(printer).printCashReport();
 	}
-	
+
 	@Test
-	public void printerShouldHaveReportEntriesAddedWhenPaymentIsMade(){
+	public void printerShouldHaveReportEntriesAddedWhenPaymentIsMade() {
 		Amount price = new Amount(100);
 		Amount priceWithTax = new Amount(105);
 		stub(repository.get(PRODUCT_01)).toReturn(price);
 		stub(taxApplier.apply(price)).toReturn(priceWithTax);
-		BarcodeScannerEventHandler barcodeScanner = getBarcodeScannerEventHandler();
-		
-		barcodeScanner.handle(new BarcodeEvent(PRODUCT_01));
-		barcodeScanner.handle(new BarcodeEvent(PRODUCT_02));
-		barcodeScanner.pay();
-		
-		verify(printer,times(2)).addEntry(any(ReportEntry.class));
+
+		barcodeScannerEventHandler.handle(new BarcodeEvent(PRODUCT_01));
+		barcodeScannerEventHandler.handle(new BarcodeEvent(PRODUCT_02));
+		barcodeScannerEventHandler.pay();
+
+		verify(printer, times(2)).addEntry(any(ReportEntry.class));
 	}
-	
+
 	private BarcodeScannerEventHandler getBarcodeScannerEventHandler() {
-		return new BarcodeScannerEventHandler(display, repository, taxApplier, printer);
+		return new BarcodeScannerEventHandler(repository, taxApplier, display,
+				printer);
 	}
 }

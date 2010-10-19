@@ -8,11 +8,14 @@ public class BarcodeScannerEventHandler {
 	private final Repository repository;
 	private final TaxApplier taxApplier;
 	private final Printer printer;
-	
-	public BarcodeScannerEventHandler(final Display display, final Repository repository, final TaxApplier taxApplier, final Printer printer) {
-		this.display = display;
+
+	public BarcodeScannerEventHandler(final Repository repository,
+			final TaxApplier taxApplier, final Display display,
+			final Printer printer) {
+
 		this.repository = repository;
 		this.taxApplier = taxApplier;
+		this.display = display;
 		this.printer = printer;
 	}
 
@@ -30,15 +33,17 @@ public class BarcodeScannerEventHandler {
 			display.printPrice(simplePrice);
 			addReportEntry(barCodeEventValue, simplePrice, barCodeTaxesPrice);
 		} catch (InvalidBarCodeEventException e) {
-			display.printPriceNotFoundMessage(String.format(PRODUCT_NOT_FOUND_MESSAGE, barCodeEventValue));
+			display.printPriceNotFoundMessage(String.format(
+					PRODUCT_NOT_FOUND_MESSAGE, barCodeEventValue));
 		}
 	}
 
 	public void pay() {
 		printer.printCashReport();
 	}
-	
-	private void addReportEntry(final String barcode, final Amount price, final Amount priceWithTax){
+
+	private void addReportEntry(final String barcode, final Amount price,
+			final Amount priceWithTax) {
 		printer.addEntry(new ReportEntry(barcode, price, priceWithTax));
 	}
 }
