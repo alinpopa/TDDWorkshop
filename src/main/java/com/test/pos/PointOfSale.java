@@ -19,7 +19,11 @@ public class PointOfSale implements POS{
 
 	@Override
 	public void pay() {
-		printer.printCashReport();
+		try{
+			printer.printCashReport();
+		}catch(EmptyReportEntriesException e){
+			throw new NoProductScanned();
+		}
 	}
 
 	@Override

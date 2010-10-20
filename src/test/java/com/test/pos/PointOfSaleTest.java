@@ -34,6 +34,14 @@ public class PointOfSaleTest {
 		verify(printer).printCashReport();
 	}
 
+	@Test(expected = NoProductScanned.class)
+	public void paymentShouldFailWhenNoProductScanned(){
+		PointOfSale pointOfSale = new PointOfSale(display, printer, repository, taxApplier);
+		stub(printer.printCashReport()).toThrow(new EmptyReportEntriesException());
+		
+		pointOfSale.pay();
+	}
+	
 	@Test
 	public void shouldApplyTaxesToProductsWhenScanning(){
 		PstFreeProduct product1 = new PstFreeProduct("product1", new Amount(100), "product description 1");
