@@ -8,13 +8,13 @@ import org.junit.Test;
 
 public class BarcodeScannerEventHandlerTest {
 
-	private POS pointOfSale;
+	private PointOfSale pointOfSale;
 
 	private BarcodeScannerEventHandler barcodeScannerEventHandler;
 	
 	@Before
 	public void setUp() {
-		pointOfSale = mock(PointOfSale.class);
+		pointOfSale = mock(PointOfSaleService.class);
 		
 		barcodeScannerEventHandler = new BarcodeScannerEventHandler(pointOfSale);
 	}

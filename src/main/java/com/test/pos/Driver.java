@@ -13,11 +13,17 @@ public class Driver {
 		catalog.set(new PstProduct("939702", new Amount(1009), "Roundzap"));
 		catalog.set(new PstFreeProduct("1455503", new Amount(1298), "Voltphase"));
 
-		POS pointOfSale = new PointOfSale(new PosDisplay(
-				new ThirdPartyConsoleDevice()), new PosReportPrinter(),
-				catalog, new BarcodeTaxApplier(new FederalTaxRate(8),
-						new ProvincialTaxRate(5)), new Sale() {
-
+		PointOfSale pointOfSale = new PointOfSaleService(
+				new PosDisplay(new ThirdPartyConsoleDevice()),
+				new Printer() {
+					
+					@Override
+					public void printReceipt(Receipt receipt) {
+						throw new UnsupportedOperationException();
+					}
+				},
+				catalog,
+				new Sale() {
 					@Override
 					public Receipt tallyReceipt() {
 						return new Receipt(new ArrayList<ReceiptEntry>());
@@ -29,7 +35,5 @@ public class Driver {
 		eventHandler.handle(new BarcodeEvent("939702"));
 		eventHandler.handle(new BarcodeEvent("1808288"));
 		eventHandler.handle(new BarcodeEvent("1455503"));
-
-		pointOfSale.pay();
 	}
 }

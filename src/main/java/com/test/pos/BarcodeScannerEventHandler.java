@@ -5,9 +5,9 @@ public class BarcodeScannerEventHandler implements EventHandler<BarcodeEvent>{
 
 	
 
-	private final POS pointOfSale;
+	private final PointOfSale pointOfSale;
 	
-	public BarcodeScannerEventHandler(final POS pointOfSale) {
+	public BarcodeScannerEventHandler(final PointOfSale pointOfSale) {
 		this.pointOfSale = pointOfSale;
 	}
 

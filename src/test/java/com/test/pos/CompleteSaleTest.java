@@ -16,10 +16,7 @@ public class CompleteSaleTest {
 		Mockito.stub(sale.tallyReceipt()).toReturn(receipt);
 		@SuppressWarnings("unchecked")
 		Catalog<Product> productCatalog = Mockito.mock(Catalog.class);
-		TaxApplier taxApplier = Mockito.mock(TaxApplier.class);
-
-		PointOfSale pointOfSale = new PointOfSale(display, printer,
-				productCatalog, taxApplier, sale);
+		PointOfSaleService pointOfSale = new PointOfSaleService(display, printer, productCatalog, sale);
 
 		pointOfSale.onCompleteSale();
 
