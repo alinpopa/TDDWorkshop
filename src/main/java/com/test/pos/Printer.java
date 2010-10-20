@@ -9,4 +9,6 @@ public interface Printer {
 	void addEntry(ReportEntry reportEntry);
 
 	List<ReportEntry> reportEntries();
+
+	void printReceipt(Receipt receipt);
 }

@@ -10,14 +10,14 @@ import java.util.Map.Entry;
 public class PosReportPrinter implements Printer {
 
 	private final Map<String, ReportEntry> reportEntries;
-	
-	public PosReportPrinter(){
+
+	public PosReportPrinter() {
 		this.reportEntries = new LinkedHashMap<String, ReportEntry>();
 	}
-	
+
 	@Override
 	public String printCashReport() {
-		if(reportEntries.isEmpty()){
+		if (reportEntries.isEmpty()) {
 			throw new EmptyReportEntriesException();
 		}
 		String report = renderReportFromEntries();
@@ -25,9 +25,9 @@ public class PosReportPrinter implements Printer {
 		return report;
 	}
 
-	private String renderReportFromEntries(){
+	private String renderReportFromEntries() {
 		StringBuilder text = new StringBuilder();
-		for(Entry<String, ReportEntry> entry : reportEntries.entrySet()){
+		for (Entry<String, ReportEntry> entry : reportEntries.entrySet()) {
 			ReportEntry reportEntry = entry.getValue();
 			text.append("[");
 			text.append(reportEntry.barcode());
@@ -39,11 +39,11 @@ public class PosReportPrinter implements Printer {
 		}
 		return text.toString();
 	}
-	
-	private void clearReportEntries(){
+
+	private void clearReportEntries() {
 		reportEntries.clear();
 	}
-	
+
 	@Override
 	public void addEntry(ReportEntry reportEntry) {
 		reportEntries.put(reportEntry.barcode(), reportEntry);
@@ -51,7 +51,13 @@ public class PosReportPrinter implements Printer {
 
 	@Override
 	public List<ReportEntry> reportEntries() {
-		return Collections.unmodifiableList(new ArrayList<ReportEntry>(reportEntries.values()));
+		return Collections.unmodifiableList(new ArrayList<ReportEntry>(
+				reportEntries.values()));
+	}
+
+	@Override
+	public void printReceipt(Receipt receipt) {
+		throw new UnsupportedOperationException();
 	}
 
 }
